@@ -1,9 +1,20 @@
 # Members of the German Bundestag who were at some point members of the SED
 
-SELECT DISTINCT ?item ?itemLabel
+SELECT DISTINCT ?person ?personLabel ?leftSedAt
 WHERE
 {
-  ?item wdt:P39 wd:Q1939555 .
-  ?item wdt:P102 wd:Q49750 .
+  # Select all people who have been elected members (wdt:P39) of the German Bundestag (wd:Q1939555)
+  ?person wdt:P39 wd:Q1939555 .
+
+  # Select all people who were also party members (wdt:P102) of the SED (wd:Q1939555)
+  ?person wdt:P102 wd:Q49750 .
+
+  # If available, display the date the party membership was suspended
+  OPTIONAL {
+    ?person p:P102 ?sedMembership .
+    ?sedMembership ps:P102 wd:Q49750 .
+    ?sedMembership pq:P582 ?leftSedAt.
+  }
+
   SERVICE wikibase:label { bd:serviceParam wikibase:language "de,en". }
 }
