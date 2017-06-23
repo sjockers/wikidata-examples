@@ -1,0 +1,9 @@
+# Members of the German Bundestag who were at some point members of the SED
+
+SELECT DISTINCT ?item ?itemLabel
+WHERE
+{
+  ?item wdt:P39 wd:Q1939555 .
+  ?item wdt:P102 wd:Q49750 .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "de,en". }
+}
